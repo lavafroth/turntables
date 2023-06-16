@@ -55,6 +55,7 @@ impl Menu {
             description: description.as_ref().to_string(),
             items: items.iter().map(|s| s.as_ref().to_string()).collect(),
             state: default_state,
+            selected: None,
         })
     }
 
@@ -102,7 +103,7 @@ impl Menu {
         match self {
             Menu::Table(t) => t.enter(),
             Menu::List(t) => t.enter(),
-            _ => {}
+            Self::TerminalList(t) => t.select(),
         }
     }
 
@@ -123,7 +124,7 @@ impl Menu {
                     KeyCode::Char('q') => return Ok(()),
                     KeyCode::Up => self.previous(),
                     KeyCode::Down => self.next(),
-                    KeyCode::Right => self.enter(),
+                    KeyCode::Right | KeyCode::Enter => self.enter(),
                     KeyCode::Left => self.back(),
                     _ => {}
                 }

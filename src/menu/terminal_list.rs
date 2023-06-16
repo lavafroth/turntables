@@ -4,6 +4,7 @@ use std::fmt;
 use tui::{
     backend::Backend,
     layout::{Constraint, Layout},
+    style::{Modifier, Style},
     text::Span,
     widgets::{List, ListItem, ListState},
     Frame,
@@ -14,15 +15,15 @@ pub struct TerminalList {
     pub description: String,
     pub items: Vec<String>,
     pub state: Option<usize>,
+    pub selected: Option<usize>,
 }
 
 impl fmt::Display for TerminalList {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
             f,
-            "{}: selected: {}",
-            self.label,
-            match self.state.and_then(|i| self.items.get(i)) {
+            "selected: {}",
+            match self.selected.and_then(|i| self.items.get(i)) {
                 None => "None".to_string(),
                 Some(m) => m.to_string(),
             }
@@ -43,7 +44,17 @@ impl TerminalList {
         let items: Vec<ListItem> = self
             .items
             .iter()
-            .map(|item| ListItem::new(Span::raw(item.to_string())))
+            .enumerate()
+            .map(|(index, item)| {
+                ListItem::new(if self.selected == Some(index) {
+                    Span::styled(
+                        item.to_string(),
+                        Style::default().add_modifier(Modifier::BOLD),
+                    )
+                } else {
+                    Span::raw(item.to_string())
+                })
+            })
             .collect();
 
         let items = List::new(items)
@@ -80,6 +91,15 @@ impl TerminalList {
                 }
             }
             None => Some(0),
+        }
+    }
+
+    /// Select or deselect an entry in the list
+    pub fn select(&mut self) {
+        if self.selected == self.state {
+            self.selected = None
+        } else {
+            self.selected = self.state
         }
     }
 }

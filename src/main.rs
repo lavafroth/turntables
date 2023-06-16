@@ -16,24 +16,19 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut terminal = Terminal::new(backend)?;
 
     let mut app: Menu = Menu::table(
-        "Arch Oxide Installer",
-        "An installer for Arch Linux in pure Rust",
+        "Table name",
+        "Table description",
         vec![
             Menu::list(
                 "Profile",
                 "profile",
                 vec![
-                    Menu::terminal_list(
-                        "Awesome",
-                        "awesomewm",
-                        vec!["choose", "some", "property"],
-                        None,
-                    ),
-                    Menu::terminal_list("gnome", "ssup_gnomie", vec!["woo", "hoo", "whooo"], None),
+                    Menu::terminal_list("A", "a", vec!["aa", "ab", "ac"], None),
+                    Menu::terminal_list("B", "b", vec!["ba", "bb", "bc"], None),
                 ],
                 None,
             ),
-            Menu::terminal_list("foo", "bar", vec!["baz", "egg", "ham"], None),
+            Menu::terminal_list("C", "c", vec!["ca", "cb", "cc"], None),
         ],
         None,
     );

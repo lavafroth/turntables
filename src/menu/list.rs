@@ -25,7 +25,7 @@ impl fmt::Display for List {
             "{}",
             match self.state.and_then(|i| self.items.get(i)) {
                 None => "Unselected".to_string(),
-                Some(m) => format!("last used: {}", m),
+                Some(m) => format!("last used: {}", m.label()),
             }
         )
     }
@@ -48,7 +48,7 @@ impl List {
         let items: Vec<ListItem> = self
             .items
             .iter()
-            .map(|item| ListItem::new(Span::raw(format!("{}", item))))
+            .map(|item| ListItem::new(Span::raw(format!("{} {}", item.label(), item))))
             .collect();
 
         let items = widgets::List::new(items)
