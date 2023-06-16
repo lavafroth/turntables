@@ -1,13 +1,14 @@
-# archoxide
-A (WIP) rewrite of the archlinux installer in pure Rust
+# turntables (┛◉言◉)┛彡┻━┻
+
+A simple, minimalist framework for recursive TUI tables 
 
 ### Getting Started
 
 Clone this repository and use cargo to run the project.
 
 ```
-git clone git@github.com:lavafroth/archoxide
-cd archoxide
+git clone https://github.com/lavafroth/turntables.git
+cd turntables
 cargo run
 ```
 
